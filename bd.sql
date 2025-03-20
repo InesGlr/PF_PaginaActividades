@@ -123,7 +123,7 @@ INSERT INTO direccion (id, pais, provincia, ciudad, codPostal, calle, numero, pi
 
 INSERT INTO usuario (id, nombre, correo, clave, rol) VALUES
 (1, 'ana', 'ana@gmail.com', '123456', '[\"ROLE_USER\"]'),
-(2, 'ines', 'inesgalanruiz@gmail.com', '123456', '[\"ROLE_USER\",\"ROLE_ADMIN\"]'),
+(2, 'ines', 'ines@gmail.com', '123456', '[\"ROLE_USER\",\"ROLE_ADMIN\"]'),
 (5, 'superAdminActIVAT', 'superAdminActIVAT@gmail.com', '123456', '[\"ROLE_USER\", \"ROLE_ADMIN\", \"ROLE_SUPER_ADMIN\"]');
 
 INSERT INTO seguidor (id, usuario, follower) VALUES
