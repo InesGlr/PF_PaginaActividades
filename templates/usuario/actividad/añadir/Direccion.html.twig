@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}1º Paso - Dirección  {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/stylesUserCrearActividad.css') }}">
+{% endblock %}
+
+{% block body %}
+	{{ parent() }}
+	<main>
+		<h2>1º Paso - Dirección</h2>
+<article class="proceso">
+    <div class="circulo realizado">1</div>
+    <div class="linea"></div>
+    <div class="circulo secundarios">2</div>
+    <div class="linea"></div>
+    <div class="circulo secundarios">3</div>
+</article>
+
+	<article class="container mt-5">
+			<div class="row justify-content-center">
+				<div
+					class="col-md-8">
+					<!-- Card para la actividad -->
+					<div class="card shadow-lg">
+						<div class="card-body">
+		{{ form_start(form) }}
+		{{ form_row(form.sin_direccion) }}
+		{{ form_row(form.pais) }}
+		{{ form_row(form.provincia) }}
+		{{ form_row(form.ciudad) }}
+		{{ form_row(form.codpostal) }}
+		{{ form_row(form.calle) }}
+		{{ form_row(form.numero) }}
+		{{ form_row(form.piso) }}
+		{{ form_row(form.submit) }}
+		{{ form_end(form) }}
+		 {% for message in app.session.flashbag.get('errorDireccion') %}
+        <div class="alert alert-danger m-2" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+</div>
+					</div>
+				</div>
+			</div>
+		</article>
+
+
+	</main>
+{% endblock %}

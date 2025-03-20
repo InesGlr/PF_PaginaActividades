@@ -1,0 +1,171 @@
+main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+h2{
+    text-align: center;
+}
+
+section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+     gap: 40px 10px; 
+    padding: 20px; 
+    justify-content: center;
+    align-items: center;
+    place-items: center;
+}
+
+section > h3{
+    display: flex;                
+    flex-direction: column;      
+    align-items: center;         
+    justify-content: center;      
+    text-align: center;       
+}
+
+article {
+    display: flex; 
+    flex-direction: column; 
+    border: 1px solid #ccc; 
+    border-radius: 10px; 
+    overflow: hidden; 
+    background-color: #fff;
+    padding: 10px; 
+    width: 300px; 
+    height: 300px;
+    margin: 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    justify-content: center;
+   
+}
+
+article.search{
+    height: 350px;
+}
+
+
+article h3 {
+    font-size: 1.5em;
+    color: #333;  
+    font-weight: bold;
+
+}
+
+
+article p a {
+    color: #007bff; 
+    text-decoration: none; 
+    font-weight: bold;
+    font-size: large;
+}
+
+article p a:hover {
+    text-decoration: underline; 
+}
+article a, article h3{
+    align-self: center; 
+    text-align: center;
+}
+article .btn {
+    padding: 10px 20px;
+}
+
+article .btn:hover {
+    background-color: #0056b3; 
+}
+
+article p.estado{
+    border-radius: 40px;
+    background-color: #dde3e9a6; 
+    width: fit-content; 
+padding: 8px;
+box-shadow: 5px 5px 10px #dde3e9a6; 
+}
+article p.estado .finCan {
+    color: rgb(153, 1, 1); 
+    margin-right: 8px; 
+  
+}
+article p.estado .publi {
+    color: rgb(1, 153, 52); 
+    margin-right: 8px; 
+  
+}
+
+
+
+
+.pagination {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    gap: 10px;
+    padding: 10px; 
+   
+
+}
+
+.pagination span {
+    padding: 8px 12px; /* Espaciado interno de los elementos */
+    font-size: 16px; /* Tamaño de fuente */
+    border-radius: 4px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor a mano */
+    margin: 2px;
+}
+
+.pagination .current {
+    background-color: #007bff; /* Azul intenso */
+    color: #fff; /* Texto blanco */
+    border: 1px solid #007bff; /* Borde acorde al color */
+    font-weight: bold; 
+
+}
+
+.pagination .first a,
+.pagination .previous a,
+.pagination .page a,
+.pagination .next a,
+.pagination .last a {
+    text-decoration: none; /* Elimina el subrayado */
+    color: #007bff; /* Azul intenso */
+    transition: color 0.3s ease, background-color 0.3s ease; /* Animación suave */
+}
+
+
+
+
+
+.pagination span:hover {
+    background-color: #dadddf;
+    font-weight: bold; 
+    
+}
+
+.pagination .current:hover {
+    background-color: #007bff; /* No cambia el fondo cuando pasas el ratón por encima de la página actual */
+    color: #fff; /* Mantén el texto blanco */
+}
+
+
+.col-md-auto.text-start {
+    display: flex;
+    align-items: center; /* Centra los elementos verticalmente */
+    gap: 1rem; /* Espacio entre los elementos */
+   /*  justify-content: space-between; */
+  }
+  
+
+
+ main .navBarAct{
+padding: 10px;
+  }
+
+  main .navBarAct form div  label:nth-last-child(){
+    margin: 25px 0 10px 0;
+ }
+
+ main .navBarAct form div div input{
+    margin: 0 5px 0 25px;
+ }

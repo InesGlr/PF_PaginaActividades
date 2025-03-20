@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}3er Paso{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/stylesUserCrearActividad.css') }}">
+{% endblock %}
+
+
+{% block body %}
+	{{ parent() }}
+	<main>
+	<h2>3º Paso - Crear sesiones</h2>
+<article class="proceso">
+    <div class="circulo realizado secundarios">1</div>
+    <div class="linea"></div>
+    <div class="circulo realizado secundarios">2</div>
+    <div class="linea"></div>
+    <div class="circulo realizado">3</div>
+</article>
+
+
+<article class="container mt-5">
+			<div class="row justify-content-center">
+				<div
+					class="col-md-8 alinear">
+					<!-- Card para la actividad -->
+					<div class="card shadow-lg reduccion">
+						<div class="card-body ">
+	
+
+		{{ form_start(form) }}
+		{{ form_row(form.fecha) }}
+		{{ form_row(form.hora) }}
+		{{ form_row(form.duracion) }}
+		{{ form_row(form.entradas) }}
+		{{ form_row(form.submit) }}
+		{{ form_end(form) }}
+
+		<br>
+		{% if sesiones is empty %}
+			<p>No hay ninguna sesión creada</p>
+		{% else %}
+			{% for sesion in sesiones %}
+				<p>
+					{{ sesion.entradas }} entradas
+												para las
+												{{ sesion.hora | date('H:i') }}
+												del día
+												{{ sesion.fecha | date('d-m-Y') }}
+												
+												{% if sesion.duracion is not null %}
+													, duración {{ sesion.duracion|date('H:i') }}
+												{% endif %}
+				</p>
+
+				<form method="post" action="{{ path('eliminarSesion', { 'id': sesion.id }) }}">
+					<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ sesion.id) }}">
+					<button class="btn btn-danger">Eliminar</button>
+				</form>
+			{% endfor %}
+			<div style="text-align: center;">
+    <a href="{{ path('misActividades', {'id': coordinadorId}) }}" class="btn btn-warning m-2">Ir a Mis Actividades</a>
+</div>
+
+
+		{% endif %}
+</div>
+					</div>
+				</div>
+			</div>
+		</article>
+
+	</main>
+{% endblock %}

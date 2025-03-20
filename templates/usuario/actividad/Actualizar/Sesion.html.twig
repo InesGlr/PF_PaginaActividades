@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sesiones{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/stylesUserActualizarActividad.css') }}">
+{% endblock %}
+
+{% block body %}
+	{{ parent() }}
+	<main class="sesion">
+		{% include 'usuario/actividad/actualizar/navBar.html.twig' %}
+
+		<section class="sectionAct">
+<article>
+			<h2>Crear sesion:</h2>
+			<article class="container mt-4 mb-5">
+			<div class="row justify-content-center">
+				<div class="col-md-8">
+					<div class="card shadow-lg">
+						<div class="card-body">
+			{{ form_start(form) }}
+			{{ form_row(form.fecha) }}
+			{{ form_row(form.hora) }}
+			{{ form_row(form.duracion) }}
+			{{ form_row(form.entradas) }}
+			{{ form_row(form.submit) }}
+			{{ form_end(form) }}
+</div>
+					</div>
+				</div>
+			</div>
+			
+</article>
+
+			<h2>Modificar - Sesiones existentes</h2>
+<article class="creadas">
+
+			{% if sesiones is empty %}
+				<p>No hay ninguna sesión creada</p>
+			{% else %}
+				{% for sesion in sesiones %}
+					<div class="sesionCreada shadow-lg p-4">
+						<h3>{{ loop.index }}
+							sesión:</h3>
+						{{ form_start(sessionForms[sesion.id], {'action': path('actualizar_sesion', { 'actividadId': actividad.id, 'sesionId': sesion.id })}) }}
+						{{ form_widget(sessionForms[sesion.id]) }}
+						{{ form_end(sessionForms[sesion.id]) }}
+
+						<form method="post" action="{{ path('eliminarSesion', { 'id': sesion.id }) }}">
+							<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ sesion.id) }}">
+							<button class="btn btn-danger">Eliminar</button>
+						</form>
+					</div>
+				{% endfor %}
+			{% endif %}
+</article>
+
+			<section></main>
+		{% endblock %}

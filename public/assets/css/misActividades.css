@@ -1,0 +1,129 @@
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    width: 100%;
+    padding: 20px; 
+}
+
+
+
+ main h3 {
+    font-size: 1em;
+    color: #333;
+   display: flex;               
+    flex-direction: column;       
+    align-items: center;          
+    justify-content: center;     
+    text-align: center;  
+} 
+section, article form{
+    display: flex;
+    flex-direction: column; 
+}
+
+
+
+main .sesiones ul{
+    list-style-type: none; 
+padding-left: 0;
+
+}
+main .sesiones li{
+    border-radius: 40px;
+    background-color: #dde3e9a6; 
+    width: fit-content; 
+padding: 15px;
+margin: 5px;
+
+}
+
+
+main .estado{
+    border-radius: 40px;
+    background-color: #dde3e9a6; 
+    width: fit-content; 
+    height:auto ;
+padding: 8px;
+box-shadow: 5px 5px 10px #dde3e9a6;
+text-align: center; 
+display: inline-block; 
+  white-space: nowrap;
+}
+ main td form{
+    margin: 0 auto;
+    display: block;
+    width: fit-content;   
+ }
+main button{
+margin: 5px;
+}
+
+.estado .finCan {
+    color: rgb(153, 1, 1); 
+    margin-right: 8px; 
+  
+}
+.estado .publi {
+    color: rgb(1, 153, 52); 
+    margin-right: 8px; 
+  
+}
+.estado .des {
+    color: rgb(231, 96, 6); 
+    margin-right: 8px; 
+  
+}
+
+main th{
+    text-align: center;
+}
+
+main .tipo{
+   
+  white-space: nowrap;
+}
+
+
+    table.participantes tr {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+   
+ }
+
+
+th.adminAcciones, td.adminAcciones{
+    display: none;
+}
+
+.prohibir  .alert {
+    display: inline-block;
+}
+
+@media screen and (max-width: 1024px) {
+    th.descripcion, td.descripcion, th.direccion, td.direccion {
+        display: none; 
+      }
+}
+
+@media screen and (max-width: 768px) {
+    th.categoria, td.categoria, th.tipo, td.tipo {
+        display: none; 
+      }
+
+      th.adminAcciones, td.adminAcciones{
+        display:block;
+    }
+    th.adminForm, td.adminForm, th.prohibir, td.prohibir, th.vetar, td.vetar{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    th.sesiones, td.sesiones {
+        display: none; 
+      }
+  
+}

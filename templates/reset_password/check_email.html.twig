@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Envio de correo para reestablecer contraseña{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/autentificacion.css') }}">
+{% endblock %}
+
+{% block body %}
+	{{ parent() }}
+	<main>
+
+    <article class="container mt-5">
+			<div class="row justify-content-center">
+				<div
+					class="col-md-8">
+					<!-- Card para la actividad -->
+					<div class="card shadow-lg">
+						<div class="card-body">
+                        <div class="icono">
+                            <i class="bi bi-envelope"></i>
+                            <h2>Se le envio un correo</h2>
+                        </div>
+
+    <p>
+       Si existe una cuenta que coincide con tu correo electrónico, se acaba de enviar un correo electrónico con un enlace que puedes usar para restablecer tu contraseña.
+<br>Este enlace caducará en {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+    </p><br>
+    <p>Si no recibe un correo electrónico, revise su carpeta de spam o <a href="{{ path('app_forgot_password_request') }}"> prueba de nuevo</a>.</p>
+ </div>
+					</div>
+				</div>
+			</div>
+		</article>
+	</main>
+
+{% endblock %}

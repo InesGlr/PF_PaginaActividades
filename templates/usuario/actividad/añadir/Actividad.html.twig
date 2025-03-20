@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}2er Paso{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/stylesUserCrearActividad.css') }}">
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="{{ asset('bundles/fosckeditor/ckeditor.js') }}"></script>
+	
+{% endblock %}
+
+{% block body %}
+	{{ parent() }}
+	<main>
+		<h2>2º Paso - Actividad</h2>
+<article class="proceso">
+    <div class="circulo realizado secundarios">1</div>
+    <div class="linea"></div>
+    <div class="circulo realizado">2</div>
+    <div class="linea"></div>
+    <div class="circulo secundarios">3</div>
+</article>
+
+<article class="container mt-5">
+			<div class="row justify-content-center">
+				<div
+					class="col-md-8">
+					<!-- Card para la actividad -->
+					<div class="card shadow-lg">
+						<div class="card-body">
+		{{ form_start(form) }}
+		{{ form_row(form.nombre) }}
+		{{ form_row(form.descripcion)  }}
+		{{ form_row(form.categoria) }}
+		{{ form_row(form.submit) }}
+		{{ form_end(form) }}
+</div>
+					</div>
+				</div>
+			</div>
+		</article>
+	</main>
+{% endblock %}

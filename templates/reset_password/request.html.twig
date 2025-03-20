@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reestablece tu contraseña{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/autentificacion.css') }}">
+{% endblock %}
+
+{% block body %}
+	{{ parent() }}
+	<main>
+
+   
+    <article class="container mt-5">
+			<div class="row justify-content-center">
+				<div
+					class="col-md-8">
+					<!-- Card para la actividad -->
+					<div class="card shadow-lg">
+						<div class="card-body">
+    <h2>Restablecer tu contraseña</h2>
+
+    {{ form_start(requestForm) }}
+        {{ form_row(requestForm.correo) }}
+        <div>
+            <small>
+                Ingresa tu dirección de correo electrónico y te enviaremos un
+enlace para restablecer tu contraseña.
+            </small>
+        </div>
+
+        <button class="btn btn-primary">Enviar</button>
+    {{ form_end(requestForm) }}
+
+ {% for flash_error in app.flashes('reset_password_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+    </div>
+					</div>
+				</div>
+			</div>
+		</article>
+	</main>
+
+{% endblock %}

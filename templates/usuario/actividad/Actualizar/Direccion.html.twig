@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Dirección{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/stylesUserActualizarActividad.css') }}">
+{% endblock %}
+
+{% block body %}
+	{{ parent() }}
+	<main >
+		{% include 'usuario/actividad/actualizar/navBar.html.twig' %}
+		<section class="sectionAct dirAct">
+
+			<h2>Modificar - Dirección</h2>
+			{{ form_start(form) }}
+			{{ form_row(form.sin_direccion) }}
+			{{ form_row(form.pais) }}
+			{{ form_row(form.provincia) }}
+			{{ form_row(form.ciudad) }}
+			{{ form_row(form.codpostal) }}
+			{{ form_row(form.calle) }}
+			{{ form_row(form.numero) }}
+			{{ form_row(form.piso) }}
+			{{ form_row(form.submit) }}
+			{{ form_end(form) }}
+
+		</section>
+
+	</main>
+{% endblock %}

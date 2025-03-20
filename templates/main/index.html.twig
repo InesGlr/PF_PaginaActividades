@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inicio{% endblock %}
+
+
+	{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/stylesMain.css') }}">
+{% endblock %}
+{% block body %}
+	{{ parent() }}
+
+	<main class="Act">
+	<nav class="navBarAct">
+
+
+		<h1>
+			Nuestras actividades:</h1>
+
+		{{ form_start(form) }}
+		{{ form_row(form.tipo) }}
+		{{ form_row(form.categoria) }}
+		<button type="submit" class="btn btn-primary">Filtrar</button>
+		{{ form_end(form) }}
+
+	</nav>
+
+		<section>
+
+		{% if actividades is empty %}
+			<h3>No hay actividades disponibles<i class="bi bi-x-circle"></i>
+			</h3>
+		{% else %}
+		
+			{% for actividad in actividades %}					
+				<article>
+						<h3>{{ actividad.nombre }}</h3>
+						<p><a href="{{ path('detallesUser', {'coordinador': actividad.coordinador.nombre}) }}">{{ actividad.coordinador.nombre }}</a></p>
+						<p>
+						{% if actividad.tipo == 'online' %}
+							<i class="bi bi-laptop"></i> {{ actividad.tipo }}
+						{% elseif actividad.tipo == 'presencial' %}
+							<i class="bi bi-pin-map-fill"></i> {{ actividad.tipo }} -> Calle {{ actividad.direccion.calle }} nº {{ actividad.direccion.numero }}{% if actividad.direccion.piso != null %} piso {{ actividad.direccion.numero }} {% endif %}, {{ actividad.direccion.ciudad }}
+						{% else %}
+							{{ actividad.tipo }}
+						{% endif %}
+						</p>
+						<p>Categoria | {{ actividad.categoria.nombre }}</p>
+
+						<a href="{{ path('detallesAct', {'id': actividad.id})}}" class="btn btn-primary">Ver más</a>
+					
+				</article> 
+
+			{% endfor %}
+			 
+                
+		{% endif %}
+		</section >
+                  
+
+	</main>
+{% endblock %}

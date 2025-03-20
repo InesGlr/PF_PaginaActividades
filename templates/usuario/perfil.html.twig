@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hola {{ app.user.nombre }} {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/perfil.css') }}">
+{% endblock %}
+
+{% block body %}
+	{{ parent() }}
+	<main>
+		<h2>
+			{{ form_start(form_perfil) }}
+			Hola
+			{{ form_row(form_perfil.nombre)}}
+			{{ form_widget(form_perfil.cambiar)}}
+			{{ form_end(form_perfil)  }}</h2>
+
+
+
+						<table>
+			<thead>
+				<tr>
+					<th>{{ cantidadSeguidos }} siguiendo</th>
+					<th>{{ cantidadSeguidores }} seguidores</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><div class="siguiendo">
+						{% for usuario in siguiendo %}
+							<a href="{{ path('detallesUser', {'coordinador': usuario.nombre}) }}">{{ usuario.nombre }}</a>
+							<form method="post" action="{{ path('dejarDeSeguir', { 'id': usuario.id }) }}">
+								<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ usuario.id) }}">
+								<button class="btn btn-danger">Dejar de seguir</button>
+							</form>
+						{% endfor %}
+						</div>
+					</td>
+					<td> <div class="seguidores">
+						{% for usuario in seguidores %}
+							<a href="{{ path('detallesUser', {'coordinador': usuario.nombre}) }}">{{ usuario.nombre }}</a>
+						{% endfor %}
+						</div>
+
+					</td>
+				</tr>
+			</tbody>
+		</table>
+					</main>
+				{% endblock %}

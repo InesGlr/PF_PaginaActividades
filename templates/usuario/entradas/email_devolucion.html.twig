@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Devolución de Pedido</title>
+	</head>
+	<body>
+		<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+			<h2>Devolucion de tu pedido</h2>
+
+			<p>Hola
+				{{ usuario.nombre }},</p>
+
+			<p>Tu devolucion del pedido con ID:{{ pedido.id}}
+				ha sido confirmado con los siguientes detalles:</p>
+
+			<ul>
+				<li>
+					<strong>Actividad:</strong>
+					{{ pedido.sesion.actividad.nombre }}</li>
+				<li>
+					<strong>Fecha:</strong>
+					{{ pedido.sesion.fecha|date('d/m/Y') }}</li>
+				<li>
+					<strong>Hora:</strong>
+					{{ pedido.sesion.hora|date('H:i')}}</li>
+				<li>
+					<strong>Número de entradas devueltas:</strong>
+					{{ devolucion.entradas }}</li>
+			</ul>
+
+			<p>Gracias por tu compra.</p>
+
+			<p style="color: #666; font-size: 0.9em;">
+				Este es un email automático, por favor no respondas a este mensaje.
+			</p>
+		</div>
+	</body>
+</html>

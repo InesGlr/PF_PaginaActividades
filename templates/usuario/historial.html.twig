@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Historial{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/historial.css') }}">
+{% endblock %}
+
+{% block body %}
+	{{ parent() }}
+	<main>
+		{% if pedidos is empty %}
+			<h3>No te has apuntado a ninguna actividad</h3>
+		{% else %}
+			{% for pedido in pedidos %}
+			<article>
+				<div class="tituloPedido">
+					<h3>Pedido ID: {{ pedido.id }}</h3>
+					<p>Pedido realizado el {{ pedido.fecha|date("d-m-Y") }}</p>
+				</div>
+				<div>
+					<section>
+						<a href="{{ path('detallesAct', {'id': pedido.sesion.actividad.id})}}">{{ pedido.sesion.actividad.nombre }}</a>
+						<p>
+						{% if pedido.entradas != 0 %}
+							{{ pedido.entradas }}
+							entradas
+						{% else %}
+							<i class="bi bi-circle-fill finCan"></i><b> Pedido cancelado</b>
+						{% endif %}
+
+						para la sesión de las
+						{{ pedido.sesion.hora|date("H:i") }}
+						el día
+						{{ pedido.sesion.fecha|date("d-m-Y") }}
+						<br class="ocultar">
+						{% if pedido.sesion.duracion %} con duración de
+						{{ pedido.sesion.duracion|date("H:i") }}
+						{% endif %}
+						</p>
+						 {% if devoluciones[pedido.id] is not empty %}
+        <ul>
+            {% for devolucion in devoluciones[pedido.id] %}
+                <li>{{ devolucion.entradas }} entradas devueltas, motivo: {{ devolucion.motivo }}</li>
+            {% endfor %}
+        </ul>
+    
+    {% endif %}
+						<p></p>
+						</section>
+						
+
+					{% if pedido.entradas != 0  and (pedido.sesion.fecha|date("Y-m-d") >= "now"|date("Y-m-d")) %}
+
+						<form method="post" action="{{ path('devolucion', {'id': pedido.id} ) }}" onsubmit="return confirm('¿Estás seguro de querer devolver estas entradas?');">
+							<div>
+							<div class="entradasDev">
+
+							<label for="entradas-{{ pedido.id }}">Nº de entradas:</label>
+							<input type="number" name="entradas"  id="entradas-{{ pedido.id }}"  value="1" min="1" max="{{ pedido.entradas }}">
+							</div>
+						<div>
+							<label for="motivo">Motivo:</label>
+<textarea id="motivo" name="motivo" placeholder="sin motivo" rows="3" ></textarea>
+						</div>
+
+							<input type="hidden" name="_token" value="{{ csrf_token('devolucion' ~ pedido.id) }}">
+							</div>
+							<button class="btn btn-danger">Cancelar</button>
+						</form>
+					{% endif %}
+				</div>
+			</article> 
+
+			{% endfor %}
+
+
+		{% endif %}
+	</main>
+{% endblock %}

@@ -1,0 +1,123 @@
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centrar verticalmente */
+    align-items: center; /* Centrar horizontalmente */
+    width: 100%;
+    padding: 20px; /* Espaciado interno */
+  /*   background: linear-gradient(165deg, #007bff28, #ffffff);  *//* Degradado de izquierda a derecha */
+
+}
+
+article {
+    display: flex;
+    flex-direction: column; /* Asegura que los div estén en columna */
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #fff;
+    width: 70%;
+    margin: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+}
+
+article div {
+    display: flex; /* Organiza el contenido dentro de cada div en fila */
+    flex-direction: row; /* Asegura que el contenido esté en línea horizontal */
+    justify-content: space-between; /* Espaciado uniforme entre los elementos */
+    align-items: center; /* Alinea los elementos verticalmente en el centro */
+    width: 100%; /* Ocupa todo el ancho del contenedor */
+    margin-bottom: 10px; /* Espaciado entre los div */
+}
+/* article+div p {
+    text-align: center;
+} */
+ 
+ article h3 {
+    font-size: 1.5em;
+    color: #333;
+   padding-right: 30px;
+} 
+section, article form, article form div{
+    display: flex;
+    flex-direction: column; 
+}
+
+article form div label{
+padding-right: 4px;
+}
+
+article input, article textarea{
+    border: solid 2px #707070;
+    border-radius: 2px;
+    align-content: center;
+}
+
+article p a {
+    color: #007bff; 
+    text-decoration: none; 
+    font-weight: bold;
+    font-size: x-large;
+}
+
+article p a:hover {
+    text-decoration: underline; /* Subrayado al pasar el ratón */
+}
+
+article p.estado{
+    border-radius: 40px;
+    background-color: #dde3e9a6; 
+    width: fit-content; 
+padding: 8px;
+box-shadow: 5px 5px 10px #dde3e9a6; 
+}
+article .finCan {
+    color: rgb(153, 1, 1); 
+    margin-right: 2px; 
+  
+}
+
+main a {
+    display: inline-block;
+    margin-bottom: 5px;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+
+}
+
+main a:hover {
+    color: #007BFF;
+}
+
+textarea {
+    resize: none; 
+    overflow-y: auto; 
+}
+article form div div{
+    display: flex; /* Organiza el contenido dentro de cada div en fila */
+    flex-direction: row; /* Asegura que el contenido esté en línea horizontal */
+    align-items: flex-start; /* Alinea los elementos al inicio horizontalmente */
+    
+}
+
+@media screen and (max-width: 768px) {
+    main{
+        padding: 0;
+    }
+    article div {
+        display: flex; /* Organiza el contenido dentro de cada div en fila */
+        flex-direction: column; /* Asegura que el contenido esté en línea horizontal */
+      
+    }
+    
+        article form div div.entradasDev{
+        display: flex; /* Organiza el contenido dentro de cada div en fila */
+        flex-direction: row; /* Asegura que el contenido esté en línea horizontal */
+      
+    }
+    .ocultar{
+        display: none;
+    }
+}

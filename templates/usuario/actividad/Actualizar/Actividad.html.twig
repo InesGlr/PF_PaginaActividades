@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Actividad{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/stylesUserActualizarActividad.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('bundles/fosckeditor/ckeditor.js') }}"></script>
+{% endblock %}
+
+
+{% block body %}
+	{{ parent() }}
+	<main >
+		{% include 'usuario/actividad/actualizar/navBar.html.twig' %}
+
+		<section class="sectionAct dirAct">
+			<h2>Modificar - Actividad</h2>
+
+			{{ form_start(form) }}
+			{{ form_row(form.nombre) }}
+			{{ form_row(form.descripcion) }}
+			{{ form_row(form.categoria) }}
+			{{ form_row(form.submit) }}
+			{{ form_end(form) }}
+		</section>
+
+	</main>
+{% endblock %}

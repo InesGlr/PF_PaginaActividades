@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Busqueda{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/stylesMain.css') }}">
+{% endblock %}
+
+{% block body %}
+	{{ parent() }}
+
+	<main>
+		<h2>Busqueda de {{valor}}</h2>
+
+<section>
+		{% if actividades is empty %}
+			<h3>No hay actividades con esas caracteristicas<i class="bi bi-x-circle"></i></h3>
+		{% else %}
+			{% for actividad in actividades %}
+
+				<article class="search">
+					
+						<h3>{{ actividad.nombre }}</h3>
+						<p><a href="{{ path('detallesUser', {'coordinador': actividad.coordinador.nombre}) }}">{{ actividad.coordinador.nombre }}</a></p>
+						<p>
+						{% if actividad.tipo == 'online' %}
+							<i class="bi bi-laptop"></i> {{ actividad.tipo }}
+						{% elseif actividad.tipo == 'presencial' %}
+							<i class="bi bi-pin-map-fill"></i> {{ actividad.tipo }} -> calle {{ actividad.direccion.calle }} nº {{ actividad.direccion.numero }}{% if actividad.direccion.piso != null %} piso {{ actividad.direccion.numero }} {% endif %}, {{ actividad.direccion.ciudad }}
+						{% else %}
+							{{ actividad.tipo }}
+						{% endif %}
+						</p>
+						<p>Categoría -> {{ actividad.categoria.nombre }}</p>
+						<p class="estado">{% if actividad.estado == 'finalizado' or actividad.estado == 'cancelado' %}<i class="bi bi-circle-fill finCan"></i>{{actividad.estado}}{% elseif actividad.estado == 'publicado' %}<i class="bi bi-circle-fill publi"></i>Activo{% endif %}<p>
+						<a href="{{ path('detallesAct', {'id': actividad.id})}}" class="btn btn-primary">Ver más</a>
+					
+				</article> 
+
+			{% endfor %}
+                
+		{% endif %}
+		</section>
+                    {{ knp_pagination_render(actividades) }}
+
+	</main>
+{% endblock %}

@@ -1,0 +1,114 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ actividad.nombre }} por {{ actividad.coordinador.nombre }} {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/detallesAct.css') }}">
+
+{% endblock %}
+
+{% block body %}
+	{{ parent() }}
+
+	<main>
+{% if usuario is not null and actividad.estado == 'publicado' and 'ROLE_ADMIN' in usuario.rol %}
+									<form method="post" action="{{ path('cancelarActividad', { 'id': actividad.id }) }}" onsubmit="return confirm('¿Estás seguro de finalizar esta actividad?');">
+										<div class="form-group m-2">
+											<label for="motivo{{ usuario.id }}">Motivo</label>
+											<textarea class="form-control" id="motivo{{ usuario.id }}" name="motivo" rows="3" required></textarea>
+										</div>
+										<input type="hidden" name="_token" value="{{ csrf_token('cancelar' ~ actividad.id) }}">
+										<button class="btn btn-danger">Cancelar Actividad</button>
+									</form>
+{% endif %}
+
+	
+					<section>	
+						<article>
+								<h2 class="text-center">{{ actividad.nombre }}</h2>
+
+						{% if actividad.tipo == 'presencial' %}
+							<p><b>Dirección: </b> Calle {{ actividad.direccion.calle }} nº {{ actividad.direccion.numero }}{% if actividad.direccion.piso != null %} piso {{ actividad.direccion.numero }} {% endif %}, {{ actividad.direccion.ciudad }}</p>
+						{% endif %}
+						
+							<p><b>Acerca de </b><br>{{ actividad.descripcion|raw }}</p>
+
+						<p><b>Categoría: </b><br> {{ actividad.categoria.nombre }}</p>
+						<p>{{ actividad.categoria.descripcion }}</p>
+						
+
+
+							<ul class="list-group list-group-flush">
+
+								
+									{% for sesion in sesiones %}
+										<li class="list-group-item">
+											{% if sesion.actividad.estado == 'cancelado' %}
+											Se cancelo la venta de entradas
+											{% else %}
+											{{ sesion.entradas }} {% if sesion.entradas != 0 %}de {{ totalEntradasIniciales[sesion.id] }}{% endif %} entradas disponibles {% endif %}
+												para las
+												{{ sesion.hora | date('H:i') }}
+												del día
+												{{ sesion.fecha | date('d-m-Y') }}
+												
+												{% if sesion.duracion is not null %}
+													, duración {{ sesion.duracion|date('H:i') }}
+												{% endif %}
+												
+
+												<div>
+												<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-{{ sesion.id }}" 
+								{% if sesion.entradas == 0 or sesion.actividad.estado == 'finalizado' or sesion.actividad.estado == 'cancelado' or ( sesion.fecha|date('Y-m-d H:i') ~ ' ' ~ sesion.hora|date('H:i') <= "now"|date('Y-m-d H:i')) %}disabled {% endif %}>
+								{% if sesion.entradas == 0 or sesion.actividad.estado == 'finalizado' or sesion.actividad.estado == 'cancelado' or (sesion.fecha|date('Y-m-d H:i') ~ ' ' ~ sesion.hora|date('H:i') <= "now"|date('Y-m-d H:i')) %}
+								
+								No hay entradas para esta sesion 
+								{% else %} 
+								{{ sesion.entradas }} entradas{% endif %} 
+								
+								</button> 
+								
+					<div class="modal fade" id="modal-{{ sesion.id }}" tabindex="-1" aria-labelledby="exampleModalLabel-{{ sesion.id }}" aria-hidden="true"> 
+						<div class="modal-dialog"> 
+							<div class="modal-content"> 
+								<div class="modal-header"> 
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+								</button> 
+								</div> 
+								
+								<div class="modal-body"> 
+								{{ form_start(formSesion[sesion.id]) }} {{ form_widget(formSesion[sesion.id]) }} 
+								<button type="submit" class="btn btn-primary">Apuntarse
+								</button> 
+									{{ form_end(formSesion[sesion.id]) }}
+
+								</div>
+							</div>
+						</div>
+					</div>
+												</div>
+
+										</li>
+									{% endfor %}
+								
+							</ul>
+
+			</article>
+						<nav>
+							<p class="estado">{% if actividad.estado == 'finalizado' or actividad.estado == 'cancelado' %}<i class="bi bi-circle-fill finCan"></i>{{actividad.estado}}{% elseif actividad.estado == 'publicado' %}<i class="bi bi-circle-fill publi"></i>Activo{% endif %}<p>
+							<p>Coordinado por
+								<a href="{{ path('detallesUser', {'coordinador': actividad.coordinador.nombre}) }}">{{ actividad.coordinador.nombre }}</a>
+							</p>
+						<p class="tipo">
+						{% if actividad.tipo == 'online' %}
+							<i class="bi bi-laptop"></i> {{ actividad.tipo }}
+						{% elseif actividad.tipo == 'presencial' %}
+							<i class="bi bi-pin-map-fill"></i> {{ actividad.tipo }}
+						{% endif %}
+						</p>
+
+						</nav>
+					<section>	
+
+</main>{% endblock %}

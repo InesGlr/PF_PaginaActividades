@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inicio sesion
+{% endblock %}
+
+{% block body %}
+	{{ parent() }}
+
+	<main>
+	<article class="container mt-5">
+			<div class="row justify-content-center">
+				<div
+					class="col-md-8">
+					<!-- Card para la actividad -->
+					<div class="card shadow-lg">
+						<div class="card-body">
+
+		<h2>Confirmacion</h2>
+		<div>
+			<h3>Resumen:</h3>
+			<p>Para la {{ sesion.actividad.nombre }} cuya sesión seria para las {{ sesion.hora| date('H:i') }} el dia {{ sesion.fecha | date('d-m-Y') }}
+			{% if sesion.duracion is not null %}con duración {{ sesion.duracion|date('H:i') }}H{% endif %}</p>
+		<p>
+		</div>
+			<strong>Número de Entradas:</strong>
+			{{ form.entradas }}</p>
+
+		<form method="post">
+			<button type="submit" class="btn btn-success">Confirmar</button>
+		</form>
+		
+</div>
+					</div>
+				</div>
+			</div>
+		</article>
+	</main>
+
+{% endblock %}

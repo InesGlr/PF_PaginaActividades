@@ -1,0 +1,200 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mis actividades{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/misActividades.css') }}">
+{% endblock %}
+
+{% block body %}
+	{{ parent() }}
+	<main>
+		{% if mensajeVetado %}
+			<div class="alert alert-danger">
+				{{ mensajeVetado }}
+			</div>
+		{% endif %}
+
+		{% if mensajeProhibido and not mensajeVetado %}
+			<div class="alert alert-warning">
+				{{ mensajeProhibido }}
+			</div>
+		{% endif %}
+
+		{% if not mensajeProhibido and not mensajeVetado %}
+			<form method="post" action="{{ path('nueva_direccion') }}">
+				<button class="btn btn-primary">Crear actividad</button>
+			</form>
+		{% endif %}
+<form method="post" action="{{ path('detallesUser', {'coordinador': usuario.nombre}) }}">
+				<button class="btn btn-primary">Ver mi perfil publico</button>
+			</form>
+		{% if actividades is empty %}
+			<h3>No has creado ninguna actividad<i class="bi bi-x-circle"></i></h3>
+		{% else %}
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">Nombre</th>
+						<th scope="col" class="descripcion">Descripcion</th>
+						<th scope="col" class="direccion">Direccion</th>
+						<th scope="col" class="tipo">Modalidad</th>
+						<th scope="col">Estado</th>
+						<th scope="col" class="categoria">Categoria</th>
+						<th scope="col" class="sesiones">Sesiones</th>
+						<th scope="col">Acciones</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for actividad in actividades %}
+						<tr>
+							
+
+							<td><h3>{{ actividad.nombre }}</h3></td>
+							
+							<td  class="descripcion">
+								<div id="descripcion-collapsed-{{ actividad.id }}" class="collapse">
+									{{ actividad.descripcion|raw }}
+								</div>
+								<button type="button" class="btn btn-link p-0" data-bs-toggle="collapse" data-bs-target="#descripcion-collapsed-{{ actividad.id }}" aria-expanded="false" aria-controls="descripcion-collapsed-{{ actividad.id }}">
+									<i class="bi bi-caret-down-fill"></i>
+								</button>
+							</td  >
+
+							{% if actividad.direccion is empty %}
+								<td class="direccion"></td>
+							{% else %}
+								<td class="direccion">Calle
+									{{ actividad.direccion.calle }}
+									nº{{ actividad.direccion.numero }}
+									{% if actividad.direccion.piso is not null %}piso
+										{{ actividad.direccion.piso }}{% endif %},
+									{{ actividad.direccion.ciudad }}
+									{{ actividad.direccion.provincia }}
+								</td>
+							{% endif %}
+
+							<td class="tipo">{% if actividad.tipo == 'online' %}
+							<i class="bi bi-laptop"></i>
+						{% elseif actividad.tipo == 'presencial' %}
+							<i class="bi bi-pin-map-fill"></i> {% endif %}{{ actividad.tipo }}</td>
+							<td><p class="estado">{% if actividad.estado == 'finalizado' or actividad.estado == 'cancelado' %}<i class="bi bi-circle-fill finCan"></i>{% elseif actividad.estado == 'publicado' %}<i class="bi bi-circle-fill publi"></i>{% elseif actividad.estado == 'desarrollo' %}<i class="bi bi-circle-fill des"></i>{% endif %}{{ actividad.estado  }}</p></td>
+							<td class="categoria">{{ actividad.categoria.nombre }}</td>
+							<td class="sesiones">
+								{% if actividadesSesiones[actividad.id] is not empty %}
+									<ul>
+										
+										{% for sesion in actividadesSesiones[actividad.id] %}
+											<li class="liSesion">{{ sesion.entradas }}/{{ totalEntradasIniciales[sesion.id] }} entradas
+												para las
+												{{ sesion.hora | date('H:i') }}
+												el día
+												{{ sesion.fecha | date('d-m-Y') }}
+												
+												{% if sesion.duracion is not null %}
+													, duración {{ sesion.duracion|date('H:i') }}
+												
+												{% endif %}
+												{% if pedidosPorSesion[sesion.id] %}
+
+<div id="sesion-collapsed-{{ sesion.id }}" class="collapse">
+
+												<table class="participantes"><thead><tr>
+						
+						<th scope="col">Participantes</th></tr></thead><tbody><tr>
+												{% for pedido in pedidosPorSesion[sesion.id] %}
+												<td>
+									<b>{{ pedido.usuario.nombre }}</b> / correo {{ pedido.usuario.correo }}/ {% if pedido.entradas != 0 %}entradas: {{ pedido.entradas }} {% else %}<b> cancelado </b> {% endif %}el dia {{ pedido.fecha| date('d-m-Y') }} 
+{% for devolucion in devolucionesPorPedido[pedido.id] %}
+ entradas devueltas: {{ devolucion.entradas }} por el motivo {{ devolucion.motivo }}  el dia {{ devolucion.fecha| date('d-m-Y') }} 
+</td>
+
+										{% endfor %}
+								
+
+										{% endfor %}
+										</tr></tbody></table>
+								</div>
+<button type="button" class="btn btn-link p-0" data-bs-toggle="collapse" data-bs-target="#sesion-collapsed-{{ sesion.id }}" aria-expanded="false" aria-controls="descripcion-collapsed-{{ actividad.id }}">
+									<i class="bi bi-caret-down-fill"></i>
+								</button>
+												{% endif %}
+
+											</li>
+										{% endfor %}
+									</ul>
+								{% else %}
+									<p>No hay sesiones</p>
+								{% endif %}
+							</td>
+							<td>
+
+
+								{% set estado = actividad.estado %}
+
+								{% if estado == 'desarrollo' %}
+									{% if not mensajeProhibido and not mensajeVetado %}
+										<form method="post" action="{{ path('publicarActividad', { 'id': actividad.id }) }}" {% if actividadesSesiones[actividad.id] is not empty %} onsubmit="return confirm('¿Estás seguro de hacer pública esta actividad?');" {% endif %}>
+											<input type="hidden" name="_token" value="{{ csrf_token('publicar' ~ actividad.id) }}">
+											{% if actividadesSesiones[actividad.id] is empty %}
+												<button type="button" class="btn btn-success" onclick="alert('No puedes publicar sin tener minimo 1 sesion');">
+													Publicar
+												</button>
+											{% else %}
+												<button type="submit" class="btn btn-success">
+													Publicar
+												</button>
+											{% endif %}
+										</form>
+									{% endif %}
+
+									{% if actividad.direccion %}
+										<form method="post" action="{{ path('actualizar_direccion', { 'actividadId': actividad.id , 'direccionId': actividad.direccion.id }) }}">
+											<input type="hidden" name="_token" value="{{ csrf_token('actualizar_direccion' ~ actividad.direccion.id) }}">
+											<button class="btn btn-primary">Modificar</button>
+										</form>
+									{% else %}
+										<form method="post" action="{{ path('actualizar_direccion', { 'actividadId': actividad.id , 'direccionId': 0 }) }}">
+											<input type="hidden" name="_token" value="{{ csrf_token('actualizar_direccion' ~ 0) }}">
+											<button class="btn btn-primary">Modificar</button>
+										</form>
+									{% endif %}
+
+
+									<form method="post" action="{{ path('eliminarActividad', { 'id': actividad.id }) }}" onsubmit="return confirm('¿Estás seguro de eliminar esta actividad?');">
+										<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ actividad.id) }}">
+										<button class="btn btn-danger">Eliminar</button>
+									</form>
+
+								{% elseif estado == 'publicado' %}
+									<form method="post" action="{{ path('finalizarActividad', { 'id': actividad.id }) }}" onsubmit="return confirm('¿Estás seguro de finalizar esta actividad?');">
+										<input type="hidden" name="_token" value="{{ csrf_token('finalizar' ~ actividad.id) }}">
+										<button class="btn btn-warning">Finalizar</button>
+									</form>
+									<form method="post" action="{{ path('cancelarActividad', { 'id': actividad.id }) }}" onsubmit="return confirm('¿Estás seguro de finalizar esta actividad?');">
+										<div class="form-group m-2">
+											<label for="motivo{{ usuario.id }}">Motivo</label>
+											<textarea class="form-control" id="motivo{{ usuario.id }}" name="motivo" rows="3" required></textarea>
+										</div>
+										<input type="hidden" name="_token" value="{{ csrf_token('cancelar' ~ actividad.id) }}">
+										<button class="btn btn-secondary">Cancelar</button>
+									</form>
+								{% elseif estado == 'finalizado' or estado == 'cancelado'%}
+									<p>No hay acciones</p>
+								{% endif %}
+
+							</td>
+						</tr>
+					{% endfor %}
+
+						
+				</tbody>
+			</table>
+
+
+		{% endif %}
+
+
+	</main>
+{% endblock %}

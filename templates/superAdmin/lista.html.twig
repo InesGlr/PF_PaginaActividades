@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Categorias{% endblock %}
+
+	{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/misActividades.css') }}">
+{% endblock %}
+
+{% block body %}
+	{{ parent() }}
+    <main>
+<h2>Lista de Categorías</h2>
+
+{% if categorias is not empty %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for categoria in categorias %}
+                <tr>
+                    <td>{{ categoria.nombre }}</td>
+                    <td>{{ categoria.descripcion }}</td>
+                    <td> <a href="{{ path('editar_categoria', { id: categoria.id }) }}" class="btn btn-warning">Editar</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+			<h3>No hay categorías disponibles<i class="bi bi-x-circle"></i></h3>
+{% endif %}
+
+<a href="{{ path('crear_categoria') }}" class="btn btn-primary">Crear Nueva Categoría</a>
+
+
+ <div class="registros-admins pt-5">
+        <h2>Registros de vuestras acciones administradores</h2>
+{% if registrosSuperAdmins is not empty %}
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Admin</th>
+                    <th scope="col">Usuario</th>
+                    <th scope="col">Acción</th>
+                    <th scope="col">Motivo</th>
+                    <th scope="col">Fecha</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for registro in registrosSuperAdmins %}
+                    <tr>
+                        <td>{{ registro.adminId }}</td>
+                        <td>{{ registro.categoria }}</td> 
+                        <td>{{ registro.accion }}</td>
+                        <td>{{ registro.fecha|date('Y-m-d H:i:s') }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+			<h3>No hay ningún registro <i class="bi bi-x-circle"></i></h3>
+{% endif %}
+</main>
+{% endblock %}

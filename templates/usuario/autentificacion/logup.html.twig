@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Registro usuario{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/autentificacion.css') }}">
+{% endblock %}
+{% block javascripts %}
+ 
+{% endblock %}
+
+{% block body %}
+	{{ parent() }}
+	<main>
+
+    <article class="container mt-5">
+			<div class="row justify-content-center">
+				<div
+					class="col-md-8">
+					<!-- Card para la actividad -->
+					<div class="card shadow-lg">
+						<div class="card-body">
+			<h2>Registro</h2>
+
+		{{ form_start(form_usuarios) }}
+		{{ form_row(form_usuarios.nombre)}}
+		{{ form_row(form_usuarios.correo)}}
+		{{ form_row(form_usuarios.clave)}}
+		{{ form_widget(form_usuarios.submit)}}
+		{{ form_end(form_usuarios)  }}
+
+		{% if notificacion %}
+	<div class="text-center m-2">
+
+<p >¡Registro exitoso! Redirígete <a href="{{ path('login') }}">aquí</a> para iniciar sesión.</p>
+	</div>
+
+    {% endif %}
+
+	</div>
+				</div>
+			</div>
+		</article>
+		
+	</main>
+
+{% endblock %}

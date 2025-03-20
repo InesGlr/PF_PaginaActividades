@@ -1,0 +1,214 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listado de usuarios{% endblock %}
+
+	{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/misActividades.css') }}">
+{% endblock %}
+
+{% block body %}
+	{{ parent() }}
+	<main>
+		<form class="d-flex" role="search" method="get" action="{{ path('getUsuario') }}">
+			<input class="form-control me-2" type="search" name="valor" placeholder="Nombre o correo del usuario" value="{{ valor|default('') }}" aria-label="Search">
+			<button class="btn btn-outline-success" type="submit">Buscar</button>
+		</form>
+			<h2>Listado usuarios:</h2>
+			{% if listUsuarios is empty %}
+			<h3>No hay ningún usuario con esas características<i class="bi bi-x-circle"></i></h3>
+		{% else %}
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">Nombre</th>
+						<th scope="col">Correo</th>
+						<th scope="col" class= "adminForm">Admin</th>
+						<th scope="col" class= "prohibir">Prohibir</th>
+						<th scope="col" class= "vetar">Vetar</th>
+						<th scope="col" class= "adminAcciones">Acciones</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for usuario in listUsuarios %}
+						<tr>
+							<td>{{ usuario.Nombre}}<br>ID: {{ usuario.id}}
+							</td>
+							<td>{{ usuario.Correo}}
+							</td>
+
+
+							<td class="adminForm">
+								
+								{% if 'ROLE_ADMIN' not in usuario.rol %}
+
+									<form method="post" action="{{ path('crearAdmin', { 'id': usuario.id }) }}" onsubmit="return confirm('¿Estás seguro de hacer administrador a {{usuario.nombre}}?');">
+										<div class="form-group">
+											<label for="motivo{{ usuario.id }}">Motivo</label>
+											<textarea class="form-control" id="motivo{{ usuario.id }}" name="motivo" rows="3" required></textarea>
+										</div>
+										<input type="hidden" name="_token" value="{{ usuario.id }}">
+										<button class="btn btn-primary">Volver admin</button>
+									</form>
+								{% else %}
+
+									<form method="post" action="{{ path('eliminarAdmin', { 'id': usuario.id }) }}" onsubmit="return confirm('¿Estás seguro de revocar sus privilegios de administrador a {{usuario.nombre}}?');">
+										<div class="form-group">
+											<label for="motivo{{ usuario.id }}">Motivo</label>
+											<textarea class="form-control" id="motivo{{ usuario.id }}" name="motivo" rows="3" required></textarea>
+										</div>
+										<input type="hidden" name="_token" value="{{ usuario.id }}">
+										<button class="btn btn-secondary">Revocar rol admin</button>
+									</form>
+								{% endif %}
+							</td>
+							<td class="prohibir">
+
+								{% if usuario.id in prohibidos|keys %}
+									<div class="alert alert-danger">
+										Prohibido:
+										{{ prohibidos[usuario.id].motivo }}
+									</div>
+								<form action="{{ path('revertirProhibicionUsuario', {'id': usuario.id}) }}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas revertir la prohibicion de este usuario?');" >
+   <div class="form-group">
+											<label for="motivo{{ usuario.id }}">Motivo</label>
+											<textarea class="form-control" id="motivo{{ usuario.id }}" name="motivo" rows="3" required></textarea>
+										</div>
+    <button type="submit" class="btn btn-secondary">Revertir</button>
+</form>
+
+								{% else %}
+									<form action="{{ path('prohibirUsuario', {'id': usuario.id}) }}" method="post"  onsubmit="return confirm('¿Estás seguro de que deseas prohibir a este usuario?');">
+										<div class="form-group">
+											<label for="motivo{{ usuario.id }}">Motivo</label>
+											<textarea class="form-control" id="motivo{{ usuario.id }}" name="motivo" rows="3" required></textarea>
+										</div>
+										<button type="submit" class="btn btn-warning">Prohibir</button>
+									</form>
+								{% endif %}
+							</td>
+							<td class="vetar">
+
+								{% if usuario.id in vetadosIDs %}
+									<div class="alert alert-danger">
+										Vetado:
+										{{ vetados[usuario.id].motivo ?? 'Sin motivo especificado' }}
+									</div>
+									<form action="{{ path('revertirVetoUsuario', {'id': usuario.id}) }}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas revertir el veto de este usuario?');">
+   <div class="form-group">
+											<label for="motivo{{ usuario.id }}">Motivo</label>
+											<textarea class="form-control" id="motivo{{ usuario.id }}" name="motivo" rows="3" required></textarea>
+										</div>
+    <button type="submit" class="btn btn-secondary">Revertir</button>
+</form>
+
+								{% else %}
+									<form action="{{ path('vetarUsuario', {'id': usuario.id}) }}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas vetar a este usuario?');">
+										<div class="form-group">
+											<label for="motivo{{ usuario.id }}">Motivo</label>
+											<textarea class="form-control" id="motivo{{ usuario.id }}" name="motivo" rows="3" required></textarea>
+										</div>
+										<button type="submit" class="btn btn-danger">Vetar</button>
+									</form>
+								{% endif %}
+							</td>
+							<td class="adminAcciones">
+							<article>
+							
+								{% if 'ROLE_ADMIN' not in usuario.rol %}
+
+									<form method="post" action="{{ path('crearAdmin', { 'id': usuario.id }) }}" onsubmit="return confirm('¿Estás seguro de hacer administrador a {{usuario.nombre}}?');">
+										<input type="hidden" name="_token" value="{{ usuario.id }}">
+										<button class="btn btn-primary">Volver admin</button>
+									</form>
+								{% else %}
+
+									<form method="post" action="{{ path('eliminarAdmin', { 'id': usuario.id }) }}" onsubmit="return confirm('¿Estás seguro de revocar sus privilegios de administrador a {{usuario.nombre}}?');">
+										<input type="hidden" name="_token" value="{{ usuario.id }}">
+										<button class="btn btn-secondary">Revocar rol admin</button>
+									</form>
+								{% endif %}
+							</article>
+							<article>
+
+								{% if usuario.id in prohibidos|keys %}
+									<div class="alert alert-danger">
+										Prohibido:
+										{{ prohibidos[usuario.id].motivo }}
+									</div>
+									<form action="{{ path('revertirProhibicionUsuario', {'id': usuario.id}) }}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas revertir la prohibicion de este usuario?');" >
+    <button type="submit" class="btn btn-secondary">Revertir</button>
+</form>
+									{% else %}
+									<form action="{{ path('prohibirUsuario', {'id': usuario.id}) }}" method="post">
+										<div class="form-group">
+											<label for="motivo{{ usuario.id }}">Motivo</label>
+											<textarea class="form-control" id="motivo{{ usuario.id }}" name="motivo" rows="3" required></textarea>
+										</div>
+										<button type="submit" class="btn btn-warning">Prohibir</button>
+									</form>
+								{% endif %}
+							</article>
+							<article>
+
+								{% if usuario.id in vetadosIDs %}
+									<div class="alert alert-danger">
+										Vetado:
+										{{ vetados[usuario.id].motivo ?? 'Sin motivo especificado' }}
+									</div>
+									<form action="{{ path('revertirVetoUsuario', {'id': usuario.id}) }}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas revertir el veto de este usuario?');">
+    <button type="submit" class="btn btn-secondary">Revertir</button>
+</form>
+									{% else %}
+									<form action="{{ path('vetarUsuario', {'id': usuario.id}) }}" method="post">
+										<div class="form-group">
+											<label for="motivo{{ usuario.id }}">Motivo</label>
+											<textarea class="form-control" id="motivo{{ usuario.id }}" name="motivo" rows="3" required></textarea>
+										</div>
+										<button type="submit" class="btn btn-danger">Vetar</button>
+									</form>
+								{% endif %}
+							</article>
+                                
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% endif %}
+
+
+
+
+    <div class="registros-admins">
+        <h2>Registros de vuestras acciones administradores</h2>
+{% if registrosAdmins is not empty %}
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Admin</th>
+                    <th scope="col">Usuario</th>
+                    <th scope="col">Acción</th>
+                    <th scope="col">Motivo</th>
+                    <th scope="col">Fecha</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for registro in registrosAdmins %}
+                    <tr>
+                        <td>{{ registro.adminId }}</td>
+                        <td>{{ registro.usuario }}</td> 
+                        <td>{{ registro.accion }}</td>
+                        <td>{{ registro.motivo }}</td>
+                        <td>{{ registro.fecha|date('Y-m-d H:i:s') }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+			<h3>No hay ningún registro <i class="bi bi-x-circle"></i></h3>
+{% endif %}
+		</main>
+	{% endblock %}

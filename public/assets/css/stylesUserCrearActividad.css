@@ -1,0 +1,114 @@
+main{
+    padding: 20px;
+    
+}
+
+h2{
+    text-align: center;
+}
+
+label, button{
+    margin-top: 10px;
+}
+
+p{
+    text-align: center;
+    color: rgb(1, 153, 52);
+    font-weight: bold;
+}
+main form div .form-check-input {
+    margin: 14px 0 0 10px;
+}
+
+/* General styles for the article */
+.proceso {
+    display: flex;
+    align-items: center; /* Centra verticalmente los elementos dentro del contenedor */
+    justify-content: center; /* Centra horizontalmente el contenedor en su espacio */
+    gap: 10px; /* Espaciado entre elementos */
+    width: 70%;
+    margin: 20px auto;
+}
+
+/* Estilo para los círculos */
+.circulo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px; /* Tamaño del círculo */
+    height: 60px;
+    border-radius: 50%; /* Hace que el div sea circular */
+    background-color: white; /* Color azul */
+    color: #007BFF; /* Color del texto */
+    font-size: 24px; /* Tamaño del número */
+    font-weight: bold;
+    border: 2px solid #007BFF;
+
+}
+
+.realizado {
+        background-color: #007BFF; /* Color azul */
+    color: white;
+    }
+
+/* Estilo para las líneas */
+.linea {
+    flex-grow: 1; /* Ocupa todo el espacio disponible entre los círculos */
+    height: 4px; /* Grosor de la línea */
+    background-color: #007BFF; /* Color azul */
+}
+
+#crear_sesion_hora, #crear_sesion_duracion {
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+   
+    width: fit-content; 
+    padding: 0;
+ }
+#crear_sesion_hora select, #crear_sesion_duracion select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none; 
+    border: none;
+    background: transparent;
+    outline: none;
+    padding: 6px 20px;
+    
+ }
+ 
+
+  #crear_sesion_hora select::-webkit-scrollbar, #crear_sesion_duracion select::-webkit-scrollbar {
+   
+    display: none;
+ }
+ main .reduccion{
+    width: 50%; 
+ }
+ main .alinear{
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+ }
+
+ @media (max-width: 1024px) {
+   
+    main .reduccion{
+        width: 60%; 
+     }
+}
+@media (max-width: 768px) {
+    .proceso .linea,
+    .proceso .secundarios{
+        display: none;
+    }
+    main .reduccion{
+        width: 70%; 
+     }
+}
+
+#cke_notifications_area_actividad_descripcion{
+    display: none;
+
+}

@@ -1,0 +1,59 @@
+*{
+    margin:0;
+    padding: 0;
+    
+}
+
+body{
+    display: grid;
+    grid-template-areas: 
+        'cabecero cabecero'
+        'principal principal'
+        'pie pie';
+    grid-template-columns: 1fr 4fr; 
+    grid-template-rows: 60px minmax(400px, 1fr) 160px;
+    overflow-x: hidden; 
+    background: rgb(243, 248, 250)!important;
+    
+}
+header{
+    grid-area: cabecero; 
+  /*   background: #007bff28;  */
+   /*  background: linear-gradient(180deg, #007bff28, transparent);  *//* Degradado de izquierda a derecha */
+   z-index: 1000; 
+}
+.buscadorNav input{
+    background: rgb(243, 248, 250);
+}
+
+.colorF{
+    background:  #cce4fc ; 
+
+}
+.headTitulo{
+    margin: 0; 
+    padding: 0;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    height: 100%; 
+}
+
+main{
+    grid-area: principal; 
+    background: rgb(243, 248, 250);
+}
+
+
+footer{
+    grid-area: pie; 
+
+}
+
+table {
+    border-collapse: separate; /* Necesario para que el border-radius funcione */
+    border-spacing: 0; /* Elimina el espacio entre celdas */
+    border-radius: 10px; /* Radio de esquina */
+    overflow: hidden; /* Opcional para asegurar que el contenido no sobresalga */
+}
+

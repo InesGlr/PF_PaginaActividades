@@ -1,0 +1,109 @@
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;      
+    width: 80%;              
+    max-width: 900px;         
+    margin: 0 auto;   
+}
+
+main form {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+}
+
+main form input, main form button {
+    border: none;
+    background-color: transparent;
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+    padding: 4px;
+
+}
+
+main form input {
+    border: none;
+    border-bottom: solid #333 2px;
+   
+}
+
+main table {
+    width: 70%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+main table th,
+main table td {
+    border: 1px solid #92a8bd;
+    padding: 10px;
+    text-align: left;
+    vertical-align: center;
+}
+
+main table th {
+    background-color: #cce4fc ;
+    font-weight: bold;
+    text-align: center;
+}
+main table div.siguiendo {
+    display:grid;                   
+    grid-template-columns: 20px 1fr; 
+    gap: 5px; 
+
+} 
+
+main table a {
+    display: inline-block;
+    margin-bottom: 5px;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+align-self: center;
+
+}
+
+main table a:hover {
+    color: #007BFF;
+}
+main table form {
+    display: inline-flex; 
+    justify-content: end;
+   
+} 
+main table td{
+    background: white;
+}
+
+main table div.seguidores {
+    display: flex;
+    flex-direction: column;
+}
+main table div.seguidores  a{
+    text-align: left;
+
+}
+@media (max-width: 768px) {
+    main table div.siguiendo {
+        display: flex;                /* Cambia de grid a flex */
+        flex-direction: column;       /* Coloca los elementos en una columna */
+        gap: 5px;                     /* Añade un pequeño espacio entre el nombre y el botón */
+        align-items: flex-start;      /* Alinea los elementos al inicio */
+    }
+
+    main table a {
+        margin-bottom: 0;             /* Reduce márgenes para un diseño compacto */
+    }
+
+    main table form {
+        justify-content: center;  /* Alinea el botón a la izquierda en relación al enlace */
+        width: 100%;                  /* Asegura que el formulario ocupe el espacio disponible */
+    }
+    main table td {
+    text-align: center;
+
+    }
+}

@@ -1,0 +1,128 @@
+main{
+    grid-area: principal; 
+    display: grid;
+    grid-template-areas: 
+        'nav section';
+    grid-template-columns: 1fr 3fr; 
+    gap:100px;
+
+}
+h2{
+    text-align: center;
+}
+
+nav.navBarAct{
+    grid-area: nav; 
+    border-bottom-right-radius: 20px;
+}
+section.sectionAct{
+    padding: 20px;
+
+    grid-area: section; 
+}
+ section.dirAct form{
+    padding: 1em 12em 1em 6em;
+} 
+ main.sesion section.sectionAct{
+    padding: auto 2em;
+
+} 
+label, button{
+    margin-top: 10px;
+}
+main form div .form-check-input {
+    margin: 14px 0 0 10px;
+}
+.creadas {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px; 
+}
+
+.creadas div.sesionCreada {
+    border: 1px solid #ccc;
+    padding: 5px; 
+    background-color: #f9f9f9; 
+    border-radius: 8px; 
+   /*  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  */
+}
+div.sesionCreada form{
+    padding: 2em 0,5em;
+}
+#crear_sesion_hora, #crear_sesion_duracion {
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+   
+    width: fit-content; 
+    padding: 0;
+ }
+#crear_sesion_hora select, #crear_sesion_duracion select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none; 
+    border: none;
+    background: transparent;
+    outline: none;
+    padding: 6px 20px;
+    
+ }
+ 
+
+  #crear_sesion_hora select::-webkit-scrollbar, #crear_sesion_duracion select::-webkit-scrollbar {
+   
+    display: none;
+ }
+ 
+ 
+ 
+ 
+#cke_notifications_area_actividad_descripcion{
+    display: none;
+
+}
+
+@media screen and (max-width: 1024px) {
+    main{
+        gap:30px;
+    }
+    main.sesion section.sectionAct{
+        padding: 1em;
+    }
+    section.dirAct form{
+        padding: 1em 3em 1em 3em;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    main {
+        grid-template-areas: 
+            'nav' 
+            'section'; 
+        grid-template-columns: 1fr;
+        grid-template-rows: 220px 1fr; 
+    }
+    nav.navBarAct{
+        grid-area: nav; 
+        border-bottom-right-radius: 0;
+    }
+section.sectionAct form{
+    padding: 1em 2em 1em 2em;
+}
+div.sesionCreada form{
+    padding: 0 ;
+}
+}
+
+@media screen and (max-width: 576px) {
+    .creadas {
+        display: grid;
+        grid-template-columns:  1fr;
+        grid-template-rows: repeat(2, 1fr);
+        gap: 20px; 
+    }
+    .creadas div.sesionCreada {
+        margin: 15px;
+    }
+  
+}

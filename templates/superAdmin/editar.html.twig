@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Categorias{% endblock %}
+
+	{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/autentificacion.css') }}">
+{% endblock %}
+
+{% block body %}
+	{{ parent() }}
+    <main>
+
+<h2>Editar Categoría</h2>
+
+{{ form_start(form) }}
+    {{ form_row(form.nombre) }}
+    {{ form_row(form.descripcion) }}
+    <button type="submit" class="btn btn-success">Guardar cambios</button>
+{{ form_end(form) }}
+    </main>
+
+{% endblock %}

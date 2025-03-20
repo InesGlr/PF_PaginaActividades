@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inicio sesion{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/autentificacion.css') }}">
+{% endblock %}
+
+{% block body %}
+	{{ parent() }}
+
+	<main>
+	<article class="container mt-5">
+			<div class="row justify-content-center">
+				<div
+					class="col-md-8">
+					<!-- Card para la actividad -->
+					<div class="card shadow-lg">
+						<div class="card-body">
+
+		<h2>Inicio de sesion</h2>
+		<form action="{{ path('login') }}" method="post">
+    <label for="username">Correo</label>
+    <input type="text" id="username" name="_username"/>
+    <label for="password">Clave</label>
+    <input type="password" id="password" name="_password"/>
+    <button type="submit">Iniciar sesión</button>
+</form>
+
+		{% if error %}
+			<div style="color: red; margin-top: 10px;">
+				{{ error.messageKey|trans(error.messageData, 'security') }}
+			</div>
+		{% endif %}
+			<div class="text-center">
+		<a  href="{{ path('app_forgot_password_request') }}">¿Te olvidaste de la contraseña?</a>
+
+			</div>
+
+</div>
+					</div>
+				</div>
+			</div>
+		</article>
+	</main>
+
+{% endblock %}

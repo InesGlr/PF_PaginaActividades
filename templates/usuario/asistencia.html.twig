@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Asistencia{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/asistencia.css') }}">
+{% endblock %}
+
+{% block body %}
+	{{ parent() }}
+	<main>
+		<article class="container mt-5">
+			<div class="row justify-content-center">
+				<div
+					class="col-md-8">
+					<!-- Card para la actividad -->
+					<div class="card shadow-lg">
+						<div class="card-body">
+
+							{{ form_start(form) }}
+							{{ form_row(form.receptor)}}
+							{{ form_row(form.asunto)}}
+							{{ form_row(form.mensaje)}}
+							{{ form_widget(form.submit)}}
+							{{ form_end(form)  }}
+							{% for message in app.flashes('enviado') %}
+								<p>{{ message }}</p>
+							{% endfor %}
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</article>
+
+	</main>
+{% endblock %}

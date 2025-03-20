@@ -1,0 +1,98 @@
+
+main .card-body{
+    display: flex; 
+    flex-direction: column;
+    gap: 16px;
+}
+.col-md-8 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+main .shadow-lg{
+    width: 60%;
+
+}
+
+
+main h2{
+    text-align: center;
+    color: #007bff; 
+
+}
+
+
+main form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;         
+    justify-content: center;   
+    font-weight: bold;
+
+}
+main a {
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+}
+ main a:hover {
+    color: #0056b3;
+}
+
+main input, main textarea {
+    width: 100%; /* Ajusta el ancho al contenedor */
+    padding: 10px 15px; /* Espaciado interno */
+    margin-bottom: 15px; /* Espaciado externo */
+    border: 1px solid #ccc; /* Borde sutil */
+    border-radius: 8px; /* Bordes redondeados */
+    font-size: 16px; /* Tamaño del texto */
+    color: #333; /* Color del texto */
+    background-color: #f9f9f9; /* Fondo ligeramente gris */
+    transition: all 0.3s ease; /* Transición suave para interacciones */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+}
+
+main input:focus, main textarea:focus  {
+    border-color: #007bff; /* Color del borde al enfocarse */
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2); /* Sombra más pronunciada */
+    background-color: #ffffff; /* Fondo blanco */
+    outline: none; /* Quita el contorno azul por defecto */
+}
+
+main input::placeholder {
+    color: #aaa; /* Color del texto del placeholder */
+    font-style: italic; /* Estilo cursivo para el placeholder */
+}
+
+/* Botones específicos */
+main button[type="submit"]{
+    background-color: #007bff; /* Color de fondo */
+    color: white; /* Color del texto */
+    border: none; /* Sin bordes */
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+    transition: all 0.3s ease; /* Transición suave */
+    border-radius: 4px;
+    padding: 8px;
+}
+
+main button[type="submit"]:hover {
+    background-color: #0056b3; /* Fondo más oscuro al pasar el mouse */
+    box-shadow: 0 4px 8px rgba(0, 91, 179, 0.2); /* Sombra */
+}
+
+
+
+main .icono {
+    display: flex; /* Habilita el diseño flexible */
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    height: 100px; /* Altura del contenedor */
+    width: 100%; /* O un ancho específico, si lo necesitas */
+    flex-direction: column;
+    color: #007bff; /* Cambia el color del icono si es necesario */
+    font-size: 48px;
+
+}
+

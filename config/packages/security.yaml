@@ -1,0 +1,32 @@
+security:
+  
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        #users_in_memory: { memory: null }
+        laliga:
+            entity:
+                class: App\Entity\Usuario
+                property: correo
+    encoders:
+        App\Entity\Usuario:
+         algorithm: plaintext
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: true
+            form_login:
+                login_path: login
+                check_path: login
+                default_target_path: index
+            provider: laliga
+            logout:
+                path: /logout
+                target: index
+            access_denied_handler: App\Security\AccessDeniedHandler
+    
+    access_control:
+         - { path: ^/admin/super, roles: ROLE_SUPER_ADMIN }
+         - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/user, roles: ROLE_USER }

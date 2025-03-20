@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Error
+	{{ error_code }}
+{% endblock %}
+
+{% block body %}
+	{{ parent() }}
+
+	<main>
+		<h1>Error
+			{{ error_code }}</h1>
+		<p>{{ error_message }}</p>
+
+		<a href="{{ path('index') }}" class="btn btn-primary">Volver al inicio</a>
+	</main>
+{% endblock %}
